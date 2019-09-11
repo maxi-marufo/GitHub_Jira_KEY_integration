@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Include any branches for which you wish to disable this script
+if [ -z "$BRANCHES_TO_SKIP" ]; then
+  BRANCHES_TO_SKIP=(master beta dev)
+fi
+
+# Get the current branch name
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if branch is excluded from list to skip
+BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$CURRENT_BRANCH$")
+
+# If not excluded...
+if ! [[ "$BRANCH_EXCLUDED" -eq 1 ]]; then
+  # Get the JIRA key from the branch name
+  JIRA_ID=$(echo "$CURRENT_BRANCH" | grep -Eo "[A-Z0-9]{1,10}-?[A-Z0-9]+")
+  # If a JIRA key is found...
+  if [ -n "$JIRA_ID" ]; then
+    COMMIT_FILE=$1
+    COMMIT_MSG=$(cat "$COMMIT_FILE")
+    # Check if JIRA key already in message
+    ALREADY_IN_MSG=$(grep -c '^[^#]*'$JIRA_ID $COMMIT_FILE)
+    # If not..
+    if ! [[ "$ALREADY_IN_MSG" -eq 1 ]]; then
+      # Prepend JIRA key to message
+      COMMIT_MSG=$(cat "$1")
+      echo "[$JIRA_ID] $COMMIT_MSG" > "$COMMIT_FILE"
+      echo "JIRA ID '$JIRA_ID' prepended to commit message. (Use --no-verify to skip)"
+    fi
+  fi
+fi
+
+
+
