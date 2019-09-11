@@ -1,7 +1,7 @@
 # GitHub_Jira_KEY_integration
 Hooks for inserting the JIRA Issue key into commits automatically from feature-branch name
 
-Add these two hook files into the .git directory of your repository. Then, if you are working on a feature branch which contains the JIRA issue key (e.g: feature/JIRA-123, or JIRA-123, or JIRA-123/feature,...), they will prepend the issue key betwwen [] (i.e.: [JIRA-123]) to the message.
+Add these two hook files into the .git directory of your repository. Then, if you are working on a feature branch which contains the JIRA issue key (e.g: feature/JIRA-123, or JIRA-123, or JIRA-123/feature,...), they will prepend the issue key between [] (i.e.: [JIRA-123]) to the message.
 
 Example:
 
