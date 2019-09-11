@@ -19,4 +19,4 @@ git commit -m "YOUR MESSAGE"
 
 The commit-msg hook will run, and it will prepend the issue key to you message, so the final message her would be: "[JIRA-123] YOUR MESSAGE"
 
-You can select which branches will skip this process with the BRANCHES_TO_SKIP variable.
+You can select which branches will skip this process with the BRANCHES_TO_SKIP variable. You can also add the argument --no-verify in the commit command for this purpose.
